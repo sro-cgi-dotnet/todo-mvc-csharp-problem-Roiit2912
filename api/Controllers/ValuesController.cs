@@ -38,7 +38,7 @@ namespace w3.Controllers
         // GET api/values/5
         // Retrieve the note with a particular id from the database
         [HttpGet("{id:int}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult Get(int id)
         {
             var t2= irepoobj.get_id(id);
 
@@ -61,7 +61,7 @@ namespace w3.Controllers
 
         [HttpGet("{search}")]
         // [Route("api/values/type")]
-        public ActionResult<string> Get(string search,[FromQuery] string teller)
+        public IActionResult Get(string search,[FromQuery] string teller)
         {
             if(teller =="type")
             {
@@ -104,7 +104,7 @@ namespace w3.Controllers
 
         //Retrieve your favourite notes from the database
         [HttpGet("{favourite:bool}")]
-        public ActionResult<string> Get(bool favourite)
+        public IActionResult Get(bool favourite)
         {
             var t2= irepoobj.get_favourite(favourite);
 
