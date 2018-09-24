@@ -1,0 +1,172 @@
+swagger: "2.0"
+info:
+  description: "This is a documentation for a Google Keep - This web api which can fetch all notes, notes by id/title/type/favourite. One can Post, Put and Delete entries."
+  version: "1.0.0"
+  title: "My Notes"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "abc@sample.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "Valuesapi.swagger.io"
+basePath: "/api"
+tags:
+- name: "mynotes"
+  description: "All about your Notes"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /Values:
+    get:
+      tags:
+      - "Values"
+      summary: "Get all notes from the database"
+      operationId: "Get"
+      responses:
+        200:
+          description: "Database returned Notes"
+          
+    
+          
+    post:
+      tags:
+      - "Values"
+      summary: "Add a new note to keep"
+      operationId: "Post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "mynotes"
+        description: "Note object that needs to be added to Api "
+        required: true
+        schema:
+          $ref: "#/definitions/mynotes"
+      responses:
+        201:
+          description: "Note successfully created"
+        400:
+          description: "This data already exists."
+    
+  /Values/{id}:
+    get:
+      tags:
+      - "Values"
+      summary: "Finds Notes by id"
+      operationId: "GetByid"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id values that need to be considered for selection"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid id value"
+    put:
+      tags:
+      - "Values"
+      summary: "Update an existing note"
+      operationId: "Put"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id of the note you want to update"
+        type: "integer"
+        required: true
+      - in: "body"
+        name: "mynotes"
+        description: "Note object that needs to be added to api"
+        required: true
+        schema:
+          $ref: "#/definitions/mynotes"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        201:
+          description: "Note Updated"
+    delete:
+      tags:
+      - "Values/id"
+      summary: "Deletes a note"
+      operationId: "DeleteNote"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        
+      responses:
+        200:
+          description: "Note successfully deleted"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Note not found"
+  /todo/getbytype/{text}:
+    get:
+      tags:
+      - "Values"
+      summary: "Finds Notes by Title or Label"
+      description: "For Title --> type=title "
+      operationId: "GetByTitleOrLabel"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "text"
+        in: "path"
+        description: "text can be titleName, labelName, true/false for is favourite"
+        required: true
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "type can be title, label or pinned"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid type text combination"
+definitions:
+  mynotes:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+        example: "Sample Note Title"
+      text:
+        type: "string"
+        example: "This is sample for the text field."
+      favourite:
+        type: "boolean"
+        example: "true"
+      Type:
+        type: "string"
+        example: "science"
+      
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
